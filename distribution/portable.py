@@ -64,6 +64,10 @@ def make_portable() -> Exception | BuildMetadata:
             portable_path=str(DIST_PATH),
         )
 
+        # create the build folder
+        if not os.path.exists(REPO_ROOT / "build"):
+            os.makedirs(REPO_ROOT / "build")
+
         # create the version file (only used by Windows)
         pyinstaller_versionfile.create_versionfile(
             output_file=REPO_ROOT / "build" / "exe_version.txt",
