@@ -1,0 +1,54 @@
+name: Release
+permissions:
+  contents: write
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Build executable 🔨
+    strategy:
+      matrix:
+        os: [windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - run: pipx install poetry
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.12"
+        cache: 'poetry'
+
+    - run: poetry install
+
+    - if: matrix.os == 'ubuntu-latest'
+      run: python -m distrubution.deb
+
+    - if: matrix.os == 'windows-latest'
+      run: python -m distrubution.windows
+    
+    - name: Get name of the artifacts
+      id: get_name
+      shell: bash
+      run:  |
+        echo "PORTABLE_NAME=$(ls dist | grep .*-.*\.zip)" >> $GITHUB_OUTPUT
+        echo "INSTALLER_NAME=$(ls dist | grep install-.*)" >> $GITHUB_OUTPUT
+
+    - name: Upload portable build 🚀
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: dist/${{ steps.get_name.outputs.PORTABLE_NAME }}
+        tag: ${{ github.ref }}
+    
+    - name: Upload installer 🚀
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: dist/${{ steps.get_name.outputs.INSTALLER_NAME }}
+        tag: ${{ github.ref }}

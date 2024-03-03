@@ -1,0 +1,12 @@
+# Copyright (c) 2024 JP Hutchins
+# SPDX-License-Identifier: Apache-2.0
+
+[PROJECT_OPTIONS]
+PROJECT_NAME=myapp
+PYTHON_VENV=.venv
+
+[VARIABLES]
+
+[ADD_TO_PATH]
+
+[ALIASES]

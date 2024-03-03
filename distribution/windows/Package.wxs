@@ -1,0 +1,171 @@
+<!-- Copyright (c) 2024 JP Hutchins -->
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+    xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+
+    <Package Name="$(env.PRODUCT_NAME)"
+        Manufacturer="$(env.COMPANY_NAME)"
+        Version="$(env.VERSION)"
+        UpgradeCode="f38cde94-ba91-436c-953d-b8d66bb127ea"
+        Language="1033"
+        Codepage="1252"
+        InstallerVersion="450">
+
+        <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed" />
+
+        <Media Id="1"
+            Cabinet="media1.cab"
+            EmbedCab="yes"
+            DiskPrompt="CD-ROM #1" />
+        <Property Id="DiskPrompt"
+            Value="$(env.PRODUCT_NAME) Installation" />
+
+        <Icon Id="AddRemove.ico"
+            SourceFile="AddRemove.ico" />
+        <Property Id="ARPPRODUCTICON"
+            Value="AddRemove.ico" />
+
+        <Icon Id="InteractiveShell.ico"
+            SourceFile="InteractiveShell.ico" />
+
+        <Feature Id="Main"
+            Title="$(env.PRODUCT_NAME)"
+            Description="Installs all application files."
+            Level="1"
+            ConfigurableDirectory="APPLICATIONFOLDER"
+            AllowAdvertise="no"
+            Display="expand"
+            AllowAbsent="no">
+
+            <ComponentGroupRef Id="HarvestedComponents"/>
+            <ComponentRef Id="InteractiveShellShortcut" />
+
+            <Feature Id="Environment"
+                Title="PATH Environment Variable"
+                Description="Add the install location to the PATH system environment variable."
+                Level="1">
+                <ComponentRef Id="Path" />
+            </Feature>
+
+            <Feature Id="StartMenuFolderFeature"
+                Title="Start Menu Folder"
+                Description="Add $(env.PRODUCT_NAME) to the Start Menu."
+                Level="1">
+                <ComponentRef Id="ProgramMenuShortcuts" />
+            </Feature>
+
+            <Feature Id="DesktopShortcutFeature"
+                Title="Desktop Shortcut"
+                Description="Add an $(env.PRODUCT_NAME) Shell shortcut to the desktop."
+                Level="32767">
+                <ComponentRef Id="DesktopShortcut" />
+            </Feature>
+
+        </Feature>
+
+        <UI>
+            <ui:WixUI Id="WixUI_FeatureTree" />
+            <Publish Dialog="WelcomeDlg"
+                Control="Next"
+                Event="NewDialog"
+                Value="CustomizeDlg"
+                Order="99" />
+            <Publish Dialog="CustomizeDlg"
+                Control="Back"
+                Event="NewDialog"
+                Value="WelcomeDlg"
+                Order="99" />
+        </UI>
+
+        <WixVariable Id="WixUIBannerBmp"
+            Value="WixUIBannerBmp.png" />
+
+        <WixVariable Id="WixUIDialogBmp"
+            Value="WixUIDialogBmp.png" />
+
+        <Component Id="InteractiveShellShortcut"
+            Directory="APPLICATIONFOLDER"
+            Guid="8d1f9fdf-1427-4253-b0ca-d53327b76c6e">
+            <Shortcut Id="InteractiveShell"
+                Directory="APPLICATIONFOLDER"
+                Name="$(env.PRODUCT_NAME) Shell"
+                Target="[APPLICATIONFOLDER]$(env.EXE_NAME)"
+                Arguments="-i"
+                WorkingDirectory="APPLICATIONFOLDER"
+                Icon="InteractiveShell.ico" />
+        </Component>
+
+        <StandardDirectory Id="ProgramFiles6432Folder">
+            <Directory Id="APPLICATIONFOLDER"
+                Name="$(env.PRODUCT_NAME)">
+                <Component Id="Path"
+                    Guid="3e413e98-a026-469f-ba5b-41d5201239f2"
+                    KeyPath="yes"
+                    Bitness="default">
+                    <Environment Id="PATH"
+                        Name="PATH"
+                        Value="[APPLICATIONFOLDER]"
+                        Permanent="no"
+                        Part="last"
+                        Action="set"
+                        System="yes" />
+                </Component>
+            </Directory>
+        </StandardDirectory>
+
+        <StandardDirectory Id="ProgramMenuFolder">
+            <Directory Id="ProgramMenuDirFolder"
+                Name="$(env.PRODUCT_NAME)">
+                <Component Id="ProgramMenuShortcuts"
+                    Guid="6d803332-fc9b-4dbe-b308-c2ba484368d0">
+                    <Shortcut Id="UninstallProduct"
+                        Name="Uninstall $(env.PRODUCT_NAME)"
+                        Description="Uninstalls $(env.PRODUCT_NAME)"
+                        Target="[System64Folder]msiexec.exe"
+                        Arguments="/x [ProductCode]"
+                        Directory="ProgramMenuDirFolder"
+                        Show="normal" />
+                    <Shortcut Id="InteractiveShellStartMenuShortcut"
+                        Name="$(env.PRODUCT_NAME) Shell"
+                        Description="Starts the $(env.PRODUCT_NAME) Shell"
+                        Target="[APPLICATIONFOLDER]$(env.PRODUCT_NAME) Shell.lnk"
+                        Directory="ProgramMenuDirFolder"
+                        Show="normal" />
+                    <RemoveFolder Id="ProgramMenuDirFolder"
+                        On="uninstall" />
+                    <RegistryValue Root="HKCU"
+                        Key="Software\[Manufacturer]\[ProductName]"
+                        Name="installed"
+                        Type="integer"
+                        Value="1"
+                        KeyPath="yes" />
+                </Component>
+            </Directory>
+        </StandardDirectory>
+
+        <StandardDirectory Id="DesktopFolder">
+            <Component Id="DesktopShortcut"
+                Guid="e765f2b5-e669-4c62-8864-7ac22a215361">
+                <Shortcut Id="DesktopShortcut"
+                    Name="$(env.PRODUCT_NAME) Shell"
+                    Description="Starts the $(env.PRODUCT_NAME) Shell"
+                    Target="[APPLICATIONFOLDER]$(env.PRODUCT_NAME) Shell.lnk"
+                    WorkingDirectory="APPLICATIONFOLDER"
+                    Directory="DesktopFolder"
+                    Show="normal" />
+                <RemoveFile Id="DesktopShortcut"
+                    Name="RemoveDesktopShortcut"
+                    On="uninstall" />
+                <RegistryValue Root="HKCU"
+                    Key="Software\[Manufacturer]\[ProductName]"
+                    Name="installed"
+                    Type="integer"
+                    Value="1"
+                    KeyPath="yes" />
+            </Component>
+        </StandardDirectory>
+
+    </Package>
+
+</Wix>

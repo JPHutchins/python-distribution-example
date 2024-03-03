@@ -1,0 +1,28 @@
+# Copyright (c) 2024 JP Hutchins
+# SPDX-License-Identifier: Apache-2.0
+
+[tool.poetry]
+name = "myapp"
+version = "0.0.0"
+description = "An example of Python application distribution."
+authors = [
+    "JP Hutchins <jphutchins@gmail.com>"
+]
+readme = "README.md"
+license = "Apache-2.0"
+packages = [
+    { include = "myapp" },
+]
+
+[tool.poetry.scripts]
+myapp = "myapp.main:app"
+
+[tool.poetry.dependencies]
+python = ">=3.10, <3.13"
+
+[tool.poetry.group.dev.dependencies]
+pyinstaller = "^6.4.0"
+pyinstaller-versionfile = "^2.1.1"
+
+[tool.black]
+line-length = 80
