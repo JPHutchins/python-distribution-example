@@ -90,7 +90,6 @@ def make_portable() -> Exception | BuildMetadata:
             f"--name={APP_NAME}",
             f"--distpath={DIST}",
             f"--workpath={REPO_ROOT}/build",
-            "--collect-submodules=shellingham",
             f"{REPO_ROOT}/{APP_NAME}/__main__.py",
         ) + (
             (f"--version-file={REPO_ROOT}/build/exe_version.txt",)
