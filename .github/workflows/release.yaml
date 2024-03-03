@@ -27,10 +27,14 @@ jobs:
     - run: poetry install
 
     - if: matrix.os == 'ubuntu-latest'
-      run: python -m distribution.deb
+      run: |
+        . ./envr.ps1
+        python -m distribution.deb
 
     - if: matrix.os == 'windows-latest'
-      run: python -m distribution.windows
+      run: 
+        . ./envr.ps1
+        python -m distribution.windows
     
     - name: Get name of the artifacts
       id: get_name
