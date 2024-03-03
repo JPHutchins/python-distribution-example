@@ -65,6 +65,8 @@ def make_portable() -> Exception | BuildMetadata:
         )
 
         # create the version file (only used by Windows)
+        with open(f"{REPO_ROOT}/build/exe_version.txt", "w") as file:
+            file.write("\n")
         pyinstaller_versionfile.create_versionfile(
             output_file=f"{REPO_ROOT}/build/exe_version.txt",
             version=VERSION,
