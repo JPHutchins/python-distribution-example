@@ -1,0 +1,14 @@
+--- File: .fpm
+
+--force
+--input-type dir
+--name myapp
+--license apache-2.0
+--architecture all
+--description "test description"
+--url "https://github.com/JPHutchins/python-distribution-example"
+--maintainer "JP Hutchins <jphutchins@gmail.com>"
+--after-install "distribution/fpm/after-install.sh"
+--after-remove "distribution/fpm/after-remove.sh"
+
+dist/myapp=/usr/share/
