@@ -8,5 +8,6 @@ PYTHON_VENV=.venv
 [VARIABLES]
 
 [ADD_TO_PATH]
+USER_GEMS=$HOME/.gem/bin
 
 [ALIASES]

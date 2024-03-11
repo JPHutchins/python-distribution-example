@@ -9,7 +9,7 @@ import subprocess
 from pathlib import Path
 from typing import Final
 
-from distribution.portable import APP_NAME, DIST, make_portable
+from distribution.portable import DIST, make_portable
 
 THIS_DIR: Final = Path(os.path.dirname(os.path.realpath(__file__)))
 

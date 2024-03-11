@@ -8,19 +8,27 @@ on:
 
 jobs:
   build:
-    name: Build executable 🔨
+    name: Build portable packages 🔨
     strategy:
       matrix:
-        os: [windows-latest]
+        os: [windows-latest, ubuntu-latest]
     runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v4
 
     - name: Setup dotnet
+      if: matrix.os == 'windows-latest'
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.x
+    
+    - name: Setup FPM
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt update
+        sudo apt install -y ruby
+        gem install --no-document fpm
 
     - run: pipx install poetry
 
@@ -34,7 +42,7 @@ jobs:
     - if: matrix.os == 'ubuntu-latest'
       run: |
         . ./envr.ps1
-        python -m distribution.deb
+        python -m distribution.linux
 
     - if: matrix.os == 'windows-latest'
       run: |
@@ -46,18 +54,37 @@ jobs:
       shell: bash
       run:  |
         echo "PORTABLE_NAME=$(ls dist | grep .*-.*\.zip)" >> $GITHUB_OUTPUT
-        echo "INSTALLER_NAME=$(ls dist | grep install-.*)" >> $GITHUB_OUTPUT
+        echo "MSI_NAME=$(ls dist | grep install-.*\.msi)" >> $GITHUB_OUTPUT
+        echo "DEB_NAME=$(ls dist | grep .*-.*\.deb)" >> $GITHUB_OUTPUT
+        echo "RPM_NAME=$(ls dist | grep .*-.*\.rpm)" >> $GITHUB_OUTPUT
 
-    - name: Upload portable build 🚀
+    - name: Upload portable 🚀
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: dist/${{ steps.get_name.outputs.PORTABLE_NAME }}
         tag: ${{ github.ref }}
     
-    - name: Upload installer 🚀
+    - name: Upload msi 🚀
+      if: matrix.os == 'windows-latest'
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: dist/${{ steps.get_name.outputs.INSTALLER_NAME }}
+        file: dist/${{ steps.get_name.outputs.MSI_NAME }}
+        tag: ${{ github.ref }}
+
+    - name: Upload deb 🚀
+      if: matrix.os == 'ubuntu-latest'
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: dist/${{ steps.get_name.outputs.DEB_NAME }}
+        tag: ${{ github.ref }}
+
+    - name: Upload rpm 🚀
+      if: matrix.os == 'ubuntu-latest'
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: dist/${{ steps.get_name.outputs.RPM_NAME }}
         tag: ${{ github.ref }}
