@@ -17,6 +17,15 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
+    - run: pipx install poetry
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.12"
+        cache: 'poetry'
+
+    - run: poetry install
+
     - name: Setup dotnet
       if: matrix.os == 'windows-latest'
       uses: actions/setup-dotnet@v3
@@ -30,15 +39,6 @@ jobs:
         sudo apt install -y ruby-full
         . ./envr.ps1
         gem install --no-document fpm
-
-    - run: pipx install poetry
-
-    - uses: actions/setup-python@v4
-      with:
-        python-version: "3.12"
-        cache: 'poetry'
-
-    - run: poetry install
 
     - if: matrix.os == 'ubuntu-latest'
       run: |
