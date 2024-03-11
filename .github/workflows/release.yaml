@@ -27,7 +27,8 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: |
         sudo apt update
-        sudo apt install -y ruby
+        sudo apt install -y ruby-full
+        . ./envr.ps1
         gem install --no-document fpm
 
     - run: pipx install poetry
