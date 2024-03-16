@@ -7,3 +7,9 @@ dist
 build
 *.spec
 .gem
+
+# VSCode
+# Generally I inlcude the .vscode folder, but this repo is meant to be as
+# simple as possible, so I'm excluding it.  You can find the configuration
+# in the git history if you're interested.
+.vscode

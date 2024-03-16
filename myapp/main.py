@@ -11,7 +11,18 @@ from typing import Final
 def app() -> None:
     """The application entry point."""
 
-    parser: Final = argparse.ArgumentParser(description="Example application.")
+    parser: Final = argparse.ArgumentParser(
+        description=(
+            f"Python distribution example application "
+            f"v{version('myapp')}\n"
+            "\n"
+            "Copyright (c) 2024 JP Hutchins\n"
+            "SPDX-License-Identifier: Apache-2.0\n"
+            "\n"
+            "https://github.com/JPHutchins/python-distribution-example"
+        ),
+        formatter_class=argparse.RawTextHelpFormatter,
+    )
     parser.add_argument(
         "-v",
         "--version",
