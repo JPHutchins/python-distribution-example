@@ -14,7 +14,7 @@ def app() -> None:
     parser: Final = argparse.ArgumentParser(
         description=(
             f"Python distribution example application "
-            f"v{version('myapp')}\n"
+            f"v{version('yourapp')}\n"
             "\n"
             "Copyright (c) 2024 JP Hutchins\n"
             "SPDX-License-Identifier: Apache-2.0\n"
@@ -41,7 +41,7 @@ def app() -> None:
     args: Final = parser.parse_args()
 
     if args.version is True:
-        print(version("myapp"))
+        print(version("yourapp"))
         raise SystemExit(0)
 
     print("Hello, World!")

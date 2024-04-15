@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 [PROJECT_OPTIONS]
-PROJECT_NAME=myapp
+PROJECT_NAME=yourapp
 PYTHON_VENV=.venv
 
 [VARIABLES]

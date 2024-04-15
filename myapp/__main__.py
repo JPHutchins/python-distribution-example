@@ -1,8 +1,8 @@
 # Copyright (c) 2024 JP Hutchins
 # SPDX-License-Identifier: Apache-2.0
 
-"""Support for `python -m myapp`."""
+"""Support for `python -m yourapp`."""
 
-from myapp.main import app
+from yourapp.main import app
 
 app()

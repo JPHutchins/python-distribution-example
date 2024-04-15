@@ -1,6 +1,6 @@
 --force
 --input-type dir
---name myapp
+--name yourapp
 --license apache-2.0
 --architecture all
 --description "test description"
@@ -9,4 +9,4 @@
 --after-install "after-install.sh"
 --after-remove "after-remove.sh"
 
-../../dist/myapp=/usr/share/
+../../dist/yourapp=/usr/share/

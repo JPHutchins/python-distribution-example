@@ -4,4 +4,4 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # remove the symlink that was created by after-install.sh
-rm /usr/bin/myapp
+rm /usr/bin/yourapp
