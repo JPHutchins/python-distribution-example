@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 [tool.poetry]
-name = "yourapp"
+name = "python-distribution-example"
 version = "1.0.0"
 description = "An example of Python application distribution."
 authors = [
