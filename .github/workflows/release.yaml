@@ -8,31 +8,22 @@ on:
     types: [published]
 
 jobs:
-  setup:
-    name: ⚙️ Setup build environment
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-latest]
-    runs-on: ${{ matrix.os }}
-  
-    steps:
-      - uses: actions/checkout@v4
-  
-      - run: pipx install poetry
-  
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.x"
-          cache: "poetry"
-  
-      - run: poetry install
-
   build-dist:
     name: 📦 Build distribution 
     runs-on: ubuntu-latest
-    needs: setup
 
     steps:
+    - uses: actions/checkout@v4
+
+    - run: pipx install poetry
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.x"
+        cache: "poetry"
+
+    - run: poetry install
+
     - run: poetry build
 
     - name: Store the distribution packages
@@ -97,7 +88,6 @@ jobs:
 
   build-portable:
     name:  🔨 Build portable packages
-    needs: setup
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest]
@@ -107,6 +97,17 @@ jobs:
       contents: write
 
     steps:
+    - uses: actions/checkout@v4
+
+    - run: pipx install poetry
+
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.x"
+        cache: "poetry"
+
+    - run: poetry install
+
     - name: Setup dotnet
       if: matrix.os == 'windows-latest'
       uses: actions/setup-dotnet@v3
