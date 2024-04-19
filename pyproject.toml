@@ -3,7 +3,7 @@
 
 [tool.poetry]
 name = "jpsapp"
-version = "1.0.0"
+version = "1.0.1"
 description = "An example of Python application distribution."
 authors = [
     "JP Hutchins <jphutchins@gmail.com>"
