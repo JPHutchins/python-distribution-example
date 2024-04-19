@@ -15,7 +15,7 @@ from typing import Final, NamedTuple
 
 import pyinstaller_versionfile  # type: ignore
 
-APP_NAME: Final = "yourapp"
+APP_NAME: Final = "jpsapp"
 
 VERSION: Final = version(APP_NAME)
 APP_NAME_FULL: Final = (

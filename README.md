@@ -58,7 +58,7 @@ git clone git@github.com:JPHutchins/python-distribution-example.git
 Now you can run the app within the Python venv:
 
 ```
-yourapp --help
+jpsapp --help
 ```
 
 ### Build the `sdist` and `wheel`
@@ -75,8 +75,8 @@ The build output is at `dist/`.
 python -m distribution.portable
 ```
 
-The build output is at `dist/yourapp-<version>-<platform>-<arch>`, e.g.
-`dist/yourapp-1.0.0-windows-amd64`, as well is in a ZIP archive of the same name.
+The build output is at `dist/jpsapp-<version>-<platform>-<arch>`, e.g.
+`dist/jpsapp-1.0.0-windows-amd64`, as well is in a ZIP archive of the same name.
 
 ## Tools Used
 
