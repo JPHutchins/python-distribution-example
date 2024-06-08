@@ -22,7 +22,7 @@ APP_NAME_FULL: Final = (
     f"{APP_NAME}-{VERSION}-{platform.system().lower()}"
     f"-{platform.machine().lower()}"
 )
-REPO_ROOT: Final = Path(os.environ["ENVR_ROOT"])
+REPO_ROOT: Final = Path.cwd()
 DIST: Final = Path(REPO_ROOT, "dist")
 DIST_PATH: Final = Path(DIST, APP_NAME_FULL)
 EXE_NAME: Final[str] = (
