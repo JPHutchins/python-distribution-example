@@ -115,7 +115,7 @@ jobs:
       run: |
         sudo apt update
         sudo apt install -y ruby-full
-        gem install --no-document fpm
+        sudo gem install --no-document fpm
 
     - if: matrix.os == 'ubuntu-latest'
       run: python -m distribution.linux
