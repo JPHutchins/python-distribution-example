@@ -47,8 +47,7 @@ def make_portable() -> Exception | BuildMetadata:
 
     try:
         # build the application
-        assert subprocess.run(["poetry", "install"]).returncode == 0
-        assert subprocess.run(["poetry", "build"]).returncode == 0
+        assert subprocess.run(["python", "-m", "build"]).returncode == 0
 
         print()
 
