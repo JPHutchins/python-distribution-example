@@ -9,7 +9,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "jpsapp"
-version = "1.1.4"
+version = "1.1.5"
 description = "An example of Python application distribution."
 authors = [
     { name = "JP Hutchins", email = "jphutchins@gmail.com" },
@@ -38,7 +38,7 @@ dev = [
 jpsapp = "jpsapp.main:app"
 
 [project.urls]
-Homepage = "https://github.com/JPhutchins/python-distribution-example"
+Homepage = "https://dev.to/jphutchins/building-a-universally-portable-python-app-2gng"
 Repository = "https://github.com/JPhutchins/python-distribution-example.git"
 
 [tool.setuptools]
