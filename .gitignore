@@ -7,6 +7,7 @@ dist
 build
 *.spec
 .gem
+*.egg-info
 
 # VSCode
 # Generally I inlcude the .vscode folder, but this repo is meant to be as

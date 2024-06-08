@@ -12,9 +12,7 @@ manager.
 
 ### Install Dependencies
 
-- Python >=3.10, <3.13
-- [Poetry](https://python-poetry.org/docs/): I recommend installing `pipx`
-  first and then using `pipx` to install `poetry`.
+- Python >=3.8, <3.13
 
 > Refer to [release.yaml](.github/workflows/release.yaml) for platform-specific
   installer dependencies.  The installer builds for Windows, Linux, and MacOS
@@ -37,11 +35,29 @@ git clone git@github.com:JPHutchins/python-distribution-example.git
   ```
   cd python-distribution-example
   ```
-- install the venv with poetry
+- create the venv
   ```
-  poetry install
+  python3 -m venv .venv
   ```
-  > The venv is installed to `/.venv`
+  or, if `python` points to your desired Python 3 version:
+  ```
+  python -m venv .venv
+  ```
+  > The venv is installed to `.venv`
+  > After the venv is activated, `python` is the preferred alias to the Python
+  > installed in the venv
+- activate the development environment
+  ```
+  . ./envr.ps1
+  ```
+  > `envr` will activate your venv
+- install Python dependencies to the venv, including the optional `dev`
+  dependencies
+  ```
+  pip install --require-virtualenv -e .[dev]
+  ```
+  > You must instruct users to run this step whenever the Python dependencies
+  > change.
 
 ## Build
 
@@ -64,7 +80,7 @@ jpsapp --help
 ### Build the `sdist` and `wheel`
 
 ```
-poetry build
+python -m build
 ```
 
 The build output is at `dist/`.
@@ -81,16 +97,17 @@ The build output is at `dist/jpsapp-<version>-<platform>-<arch>`, e.g.
 ## Tools Used
 
 - [GitHub Actions](https://github.com/features/actions): automate the build and
-  release of the application on GitHub runners
+  release of the application on GitHub runners.
 - [envr](https://github.com/JPhutchins/envr): manage environment variables,
-  PATH, and Python venv
-- [poetry](https://python-poetry.org/): manage Python dependencies and build
+  PATH, and Python venv.
+- [build](https://build.pypa.io/en/stable/): A simple, correct Python packaging
+  build frontend.
 - [PyInstaller](https://github.com/pyinstaller/pyinstaller): create a "one-dir"
   portable "executable" of the Python application
 - [WiX v4](https://wixtoolset.org/): create a Windows installer, `*.msi`, that
   creates a double-clickable version of the app, adds the app to the system
   PATH, adds an app folder to the Start Menu, and optionally adds a shortcut to
-  the desktop
+  the desktop.
 - [FPM](https://github.com/jordansissel/fpm): create `*.deb` and `*.rpm` Linux
   packages that install the app to `/usr/share/` and add a symlink to
   `/usr/bin/*`.
