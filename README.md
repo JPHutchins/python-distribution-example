@@ -1,10 +1,12 @@
 # Python Distribution Example
 
-This repository demonstrates one way of creating a portable Python application
-that can be installed and run without any external dependencies.  This is
-useful for distributing Python applications to users without a Python
-environment, or for distributing a Python application via a package
-manager.
+This repository accompanies [this series of articles](https://dev.to/jphutchins/building-a-universally-portable-python-app-2gng) about developing a portable
+Python application that can be installed and run without any external
+dependencies.
+
+This is useful for distributing Python applications to users without a Python
+environment, or for distributing a Python application via package
+managers.
 
 ## Setup
 
