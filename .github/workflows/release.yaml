@@ -20,12 +20,7 @@ jobs:
         python-version: "3.x"
         cache: "pip"
 
-    - run: python3 -m venv .venv
-
-    - name: Install Python dependencies
-      run: |
-        . ./envr.ps1
-        pip install --require-virtualenv -e .[dev]
+    - run: pip install .[dev]
     
     - run: python -m build
 
@@ -102,19 +97,12 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - run: pipx install poetry
-
     - uses: actions/setup-python@v5
       with:
         python-version: "3.x"
         cache: "pip"
 
-    - run: python3 -m venv .venv
-
-    - name: Install Python dependencies
-      run: |
-        . ./envr.ps1
-        pip install --require-virtualenv -e .[dev]
+    - run: pip install .[dev]
 
     - name: Setup dotnet
       if: matrix.os == 'windows-latest'
@@ -136,9 +124,7 @@ jobs:
         python -m distribution.linux
 
     - if: matrix.os == 'windows-latest'
-      run: |
-        . ./envr.ps1
-        python -m distribution.windows
+      run: python -m distribution.windows
     
     - name: Get name of the artifacts
       id: get_name
