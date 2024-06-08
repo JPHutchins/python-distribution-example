@@ -22,10 +22,8 @@ if isinstance(result, Exception):
 
 print("\nBuilding the Linux packages...")
 
-output_types: Final = ("deb", "rpm")
-
-for output_type in output_types:
-    package_name = f"install-{result.app_name_full}.{output_type}"
+for output_type in ("deb", "rpm"):
+    package_name = f"{result.app_name_full}.{output_type}"
 
     fpm_command = (
         "fpm",

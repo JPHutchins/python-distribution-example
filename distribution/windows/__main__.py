@@ -29,7 +29,7 @@ ENV: Final = os.environ.copy() | {
     "EXE_NAME": result.exe_name,
     "VERSION": result.version,
     "PORTABLE_PATH": result.portable_path,
-    "MSI_NAME": f"install-{result.app_name_full}",
+    "MSI_NAME": result.app_name_full,
 }
 
 print("\nBuilding the windows installer...\n")
