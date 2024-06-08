@@ -128,9 +128,9 @@ jobs:
       shell: bash
       run:  |
         echo "PORTABLE_NAME=$(ls dist | grep .*-.*\.zip)" >> $GITHUB_OUTPUT
-        echo "MSI_NAME=$(ls dist | grep install-.*-.*\.msi)" >> $GITHUB_OUTPUT
-        echo "DEB_NAME=$(ls dist | grep install-.*-.*\.deb)" >> $GITHUB_OUTPUT
-        echo "RPM_NAME=$(ls dist | grep install-.*-.*\.rpm)" >> $GITHUB_OUTPUT
+        echo "MSI_NAME=$(ls dist | grep .*-.*\.msi)" >> $GITHUB_OUTPUT
+        echo "DEB_NAME=$(ls dist | grep .*-.*\.deb)" >> $GITHUB_OUTPUT
+        echo "RPM_NAME=$(ls dist | grep .*-.*\.rpm)" >> $GITHUB_OUTPUT
 
     - name: 🚀 Upload portable 
       uses: svenstaro/upload-release-action@v2
