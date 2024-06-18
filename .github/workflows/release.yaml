@@ -137,7 +137,11 @@ jobs:
         echo "RPM_NAME=$(ls dist | grep .*-.*\.rpm)" >> $GITHUB_OUTPUT
 
     - name: 🖋️ Create cosign.bundle of portable
-      run: cosign sign-blob dist/${{ steps.get_name.outputs.PORTABLE_NAME }} --bundle ${{ steps.get_name.outputs.PORTABLE_NAME }}.cosign.bundle --yes
+      run: >
+        cosign sign-blob
+        dist/${{ steps.get_name.outputs.PORTABLE_NAME }} 
+        --bundle ${{ steps.get_name.outputs.PORTABLE_NAME }}.cosign.bundle
+        --yes
 
     - name: 🚀 Upload portable 
       uses: svenstaro/upload-release-action@v2
