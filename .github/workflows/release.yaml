@@ -93,6 +93,7 @@ jobs:
 
     permissions:
       contents: write
+      id-token: write
 
     steps:
     - uses: actions/checkout@v4
@@ -117,6 +118,9 @@ jobs:
         sudo apt install -y ruby-full
         sudo gem install --no-document fpm
 
+    - name: Install cosign
+      uses: sigstore/cosign-installer@v3.5.0
+
     - if: matrix.os == 'ubuntu-latest'
       run: python -m distribution.linux
 
@@ -132,11 +136,21 @@ jobs:
         echo "DEB_NAME=$(ls dist | grep .*-.*\.deb)" >> $GITHUB_OUTPUT
         echo "RPM_NAME=$(ls dist | grep .*-.*\.rpm)" >> $GITHUB_OUTPUT
 
+    - name: 🖋️ Create cosign.bundle of portable
+      run: cosign sign-blob dist/${{ steps.get_name.outputs.PORTABLE_NAME }} --bundle ${{ steps.get_name.outputs.PORTABLE_NAME }}.cosign.bundle
+
     - name: 🚀 Upload portable 
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
         file: dist/${{ steps.get_name.outputs.PORTABLE_NAME }}
+        tag: ${{ github.ref }}
+  
+    - name: 🚀 Upload portable signature 
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ steps.get_name.outputs.PORTABLE_NAME }}.cosign.bundle
         tag: ${{ github.ref }}
     
     - name: 🚀 Upload msi 
