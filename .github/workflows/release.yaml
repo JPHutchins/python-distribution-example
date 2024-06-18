@@ -130,18 +130,14 @@ jobs:
     - name: Get name of the artifacts
       id: get_name
       shell: bash
-      run:  |
+      run: |
         echo "PORTABLE_NAME=$(ls dist | grep .*-.*\.zip)" >> $GITHUB_OUTPUT
         echo "MSI_NAME=$(ls dist | grep .*-.*\.msi)" >> $GITHUB_OUTPUT
         echo "DEB_NAME=$(ls dist | grep .*-.*\.deb)" >> $GITHUB_OUTPUT
         echo "RPM_NAME=$(ls dist | grep .*-.*\.rpm)" >> $GITHUB_OUTPUT
 
     - name: 🖋️ Create cosign.bundle of portable
-      run: >-
-        cosign sign-blob 
-          dist/${{ steps.get_name.outputs.PORTABLE_NAME }} 
-          --bundle ${{ steps.get_name.outputs.PORTABLE_NAME }}.cosign.bundle
-          --yes
+      run: cosign sign-blob dist/${{ steps.get_name.outputs.PORTABLE_NAME }} --bundle ${{ steps.get_name.outputs.PORTABLE_NAME }}.cosign.bundle --yes
 
     - name: 🚀 Upload portable 
       uses: svenstaro/upload-release-action@v2
